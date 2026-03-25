@@ -8,25 +8,26 @@
 #Project:EvolvereMix
 #================================================
 
-# Ottiene la cartella dove risiede questo script
+# Ottiene la cartella dove risiede questo script (dinamico)
 DIR_ATTUALE=$(dirname "$(readlink -f "$0")")
 
 set -o errexit
-[[ $(whoami) == 'root' ]] || exec sudo -E "$0" "$@"
+[[ $(whoami) == 'root' ]] || exec sudo -E "$0" "$@" [cite: 1, 2]
 
 echo "----------------------------------------------"
 echo "Copio il tema delle icone in /usr/share/icons"
 echo "----------------------------------------------"
-# Usa la variabile DIR_ATTUALE invece del vecchio percorso fisso
-cp -a -r "$DIR_ATTUALE" /usr/share/icons/
+# Forza il nome della destinazione a EvolvereMix
+cp -a -r "$DIR_ATTUALE" /usr/share/icons/EvolvereMix
 
 sleep 2 &&
 echo "----------------------------------------------"
 echo "      Installo Lila HD Cursor"
 echo "----------------------------------------------"
+# Installa il cursore dalla sottocartella corretta
 cp -a -r "$DIR_ATTUALE/Lila_HD-cursor/" /usr/share/icons/
-rm -r /usr/share/icons/EvolvereMix/Lila_HD-cursor || true
-rm -r /usr/share/icons/EvolvereMix/.git || true
+rm -rf /usr/share/icons/EvolvereMix/Lila_HD-cursor
+rm -rf /usr/share/icons/EvolvereMix/.git
 
 echo "----------------------------------------------"
 echo "Tema di icone e cursore installato, enjoy :D"
